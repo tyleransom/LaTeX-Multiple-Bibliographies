@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in]{geometry}
+\usepackage{natbib}
+\makeatletter
+\def\@mb@citenamelist{cite,citep,citet,citealp,citealt,citeauthor} % allow citeauthor with multibib
+\makeatother
+\usepackage[resetlabels]{multibib} % to create multiple bibliographies
+\newcites{App}{Online Appendix References} % to define a new cite command for the appendix
+
+
+\begin{document}
+
+\section{Introduction}
+
+This is a sample document that shows how to use multiple bibliographies with \texttt{multibib}. We can cite references from the main bibliography using the usual \verb|\cite| command, such as \cite{lamport1994} and \cite{knuth1984}. If \verb|natbib| is included, then other commands like \verb|\citep|, \verb|\citealt|, etc. will also be supported. e.g. \verb|\citep{lamport1994}| will produce \citep{lamport1994} or \verb|\citealt{knuth1984}| will give \citealt{knuth1984}.
+
+\section{Multibib}
+\verb|multibib| consists of two key parts: $(i)$ calling the package; and $(ii)$ naming the references section. For example, if I want my appendix references section to be called ``Online Appendix References'' then I include the following in my preamble:
+
+\begin{verbatim}
+\usepackage[resetlabels]{multibib} % to create multiple bibliographies
+\newcites{App}{Online Appendix References} % to define a new cite command for the appendix   
+\end{verbatim}
+
+The first argument of \verb|\newcites{}| is the suffix to the \verb|\cite| command that directs the reference to be included in the appendix references. We can call it whatever we want, but \verb|App| is a natural choice. The second argument of \verb|\newcites{}| is the name of the references section, as described above.
+
+
+\section{Conclusion}
+
+We have seen how to create separate bibliographies for the main text and the appendices.
+
+% print the main bibliography
+\bibliographystyle{jpe}
+\bibliography{biblio}
+
+\appendix
+
+\clearpage
+
+
+\section{Online Appendix}
+
+This is an appendix that has its own bibliography. We can cite references from the appendix bibliography using the \verb|\citeApp| command, such as \citeApp{einstein1905} and \citeApp{hawking1974}. With the following addition to the preamble, the \verb|\natbib| commands can be used for the appendix references:
+
+\begin{verbatim} 
+\makeatletter 
+\def@mb@citenamelist{cite,citep,citet,citealp,citealt,citeauthor} % allow cite* with multibib 
+\makeatother 
+\end{verbatim}
+
+So \verb|\citealtApp{einstein1905}| results in \citealtApp{einstein1905} and \verb|\citepApp{hawking1974}| results in \citepApp{hawking1974}.
+
+% print the appendix bibliography
+\bibliographystyleApp{jpe}
+\bibliographyApp{biblio}
+
+\end{document}
